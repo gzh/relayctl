@@ -1,0 +1,11 @@
+{
+  "name": "relayctl",
+  "description": "Relay controller",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+      "express": "4.x",
+      "ecstatic": "3.x",
+      "request": "2.x"
+  }
+}
