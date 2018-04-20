@@ -6,6 +6,8 @@
   "dependencies": {
       "express": "4.x",
       "ecstatic": "3.x",
-      "request": "2.x"
+      "request": "2.x",
+      "xml2js": "0.4.x",
+      "body-parser": "1.18.x"
   }
 }
