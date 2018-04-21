@@ -2,7 +2,7 @@ const express = require('express');
 const ecstatic = require('ecstatic');
 const request = require('request');
 const xml2js = require('xml2js');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 const baseurl="http://192.168.0.191";
 const devauth={"user": "admin", "pass":"vkmodule", "sendImmediately":true };
@@ -12,6 +12,7 @@ var status={
     leds: []
 };
 var orders=[];
+var orderId=1;
 
 function toggleLed(led){
     request({"url": baseurl+"/protect/leds.cgi", "auth":devauth, "qs": {"led":led,"timeout":0}},
@@ -61,8 +62,6 @@ function updateStatus(){
                             ];
                         }
                     });
-                    //if(status.orders.length() > 0 && status.error == null){
-                    //}
                     var now=Date.now();
                     var expiring=orders.filter((o)=>{ return o.deadline <= now; });
                     orders=orders.filter((o)=>{ return o.deadline > now; });
@@ -97,10 +96,9 @@ app.get('/status', function(req, res) {
 app.get('/orders', function(req, res) {
     res.json(orders);
 });
-// ?led=number&timeout=number&command=number
+// ?led=number[&timeout=number][&command=number]
 app.post('/orders', function(req, res) {
-    var id=Math.max(orders.map((o) => { return o.id; }))+1;
-    console.log(req.query);
+    var id=orderId++;
     if(!req.query.led){
         res.status(400);
         res.send("URL parameter led should be specified");
