@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-12">
   <h2>Current status</h2>
   <div class="alert alert-danger" role="alert" *ngIf="status.error">
     Error: {{status.error}}
@@ -6,7 +6,10 @@
   <div class="row" *ngFor="let led of status.leds">
     <div class="col-6">{{led.name}}</div>
     <div class="col-1">
-      <button class="btn primary active" (click)="toggleLed(led.index)">{{led.value}}</button>
+      <a style="cursor: pointer" class="active" (click)="toggleLed(led.index)">
+        <img *ngIf="!led.value" src="assets/Button_Off.png"/>
+        <img *ngIf="led.value" src="assets/Button_On.png"/>
+      </a>
     </div>
   </div>
 </div>

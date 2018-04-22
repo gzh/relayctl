@@ -1,4 +1,50 @@
-<p>Total: {{orders.length}} order(s)</p>
-<div *ngFor="let order of orders">
-    In {{stringifyDeadline(order.deadline)}} {{stringifyCommand(order.command)}} led {{order.led}}
+<h2>Active orders</h2>
+<div class="row">
+  <div class="col-3">
+    <select class="form-control" [(ngModel)]="addOrderLed" name="led" placeholder="Led">
+      <option [ngValue]="null" disabled>Led</option>
+      <option *ngFor="let led of leds" [ngValue]="led.index">{{led.name}}</option>
+    </select>
+  </div>
+  <div class="col-3">
+    <select class="form-control" [(ngModel)]="addOrderTimeout" name="timeout">
+      <option value="null" disabled>Timeout</option>
+      <option [ngValue]="30">30 seconds</option>
+      <option [ngValue]="60">1 minute</option>
+      <option [ngValue]="120">2 minutes</option>
+      <option [ngValue]="300">5 minutes</option>
+      <option [ngValue]="600">10 minutes</option>
+      <option [ngValue]="1200">20 minutes</option>
+      <option [ngValue]="1800">30 minutes</option>
+      <option [ngValue]="3600">1 hour</option>
+      <option [ngValue]="7200">2 hours</option>
+    </select>
+  </div>
+  <div class="col-3">
+    <select class="form-control" [(ngModel)]="addOrderCommand" name="command">
+      <option value="null" disabled>Command</option>
+      <option [ngValue]="true">SWITCH ON</option>
+      <option [ngValue]="false">SWITCH OFF</option>
+    </select>
+  </div>
+  <div class="col-3">
+    <button class="btn active" [ngClass]="{'btn-primary': canAddOrder()}" (click)="addOrder()">Add order</button>
+  </div>
 </div>
+<br/>
+<div *ngFor="let order of orders" class="row">
+  <div class="col-3">
+    {{stringifyLedName(order.led)}}
+  </div>
+  <div class="col-3">
+    {{stringifyDeadline(order.deadline)}}
+  </div>
+  <div class="col-3">
+    {{stringifyCommand(order.command)}}
+  </div>
+  <div class="col-3">
+    <button class="btn active btn-warning" (click)="cancelOrder(order.id)">Cancel</button>
+  </div>
+</div>
+<p>Total: {{orders.length}} order(s)</p>
+<button *ngIf="orders.length>1" class="btn active btn-danger" (click)="cancelAllOrders()">Cancel all orders</button>

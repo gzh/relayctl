@@ -23,7 +23,6 @@ export class StatusComponent implements OnInit {
   }
 
   public toggleLed(ledIndex: number){
-    console.log("Toggel led "+ledIndex);
     this.relayctl.addOrder(ledIndex, 0, Command.Toggle);
   }
 }

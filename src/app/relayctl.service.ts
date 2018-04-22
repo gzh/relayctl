@@ -96,6 +96,7 @@ export class RelayctlService {
       }
       result.push(o);
     });
+    result.sort((a:Order,b:Order) => {return a.deadline.valueOf() - b.deadline.valueOf();});
     return result;
   }
   private extractStatus = (res: Response) => {
@@ -120,15 +121,15 @@ export class RelayctlService {
   }
 
   public addOrder = (led: number, timeout: number, command: Command) => {
-    var ncommand:any;
+    var ncommand:number;
     switch(command){
       case Command.Off: ncommand=0; break;
       case Command.On: ncommand=1; break;
-      case Command.Toggle: ncommand=null;
+      case Command.Toggle: ncommand=-1; break;
     }
     let sled="?led="+led;
-    let stimeout=(timeout?"&timeout="+timeout:"");
-    let scommand=(command?"&command="+ncommand:"");
+    let stimeout="&timeout="+timeout;
+    let scommand="&command="+ncommand;
     this.http.post("orders"+sled+stimeout+scommand, "")
       .map(this.extractOrders).subscribe(o => { 
         this.ordersObserver.next(o);
@@ -151,6 +152,17 @@ export class RelayctlService {
       .map(this.extractOrders).subscribe(o => { 
         this.ordersObserver.next(o);
       });
+  }
+
+  public getLedName = (n:number) : string => {
+    return this.ledNames[n];
+  }
+  public getLedNames = () : object[] => {
+    let res=[];
+    for(var k=0; k<this.ledNames.length; ++k){
+      res.push({index:k, name:this.ledNames[k]});
+    }
+    return res;
   }
   
 }
