@@ -45,7 +45,8 @@ function updateStatus(){
                     //console.log(devbody);
                     xml2js.parseString(devbody, (err, res) => {
                         if(err){
-                            status.error = "Cannot parse xml";
+                            console.log(devbody);
+                            status.error = "Cannot parse xml: "+err;
                         }
                         else
                         {
@@ -129,7 +130,7 @@ app.delete('/orders', function(req, res) {
 });
 
 app.use(ecstatic({
-    root: `${__dirname}/static`,
+    root: `${__dirname}/dist`,
     showdir: true,
 }));
 

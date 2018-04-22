@@ -1,0 +1,4 @@
+<p>Total: {{orders.length}} order(s)</p>
+<div *ngFor="let order of orders">
+    In {{stringifyDeadline(order.deadline)}} {{stringifyCommand(order.command)}} led {{order.led}}
+</div>
