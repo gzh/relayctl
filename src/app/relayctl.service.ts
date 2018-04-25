@@ -70,14 +70,18 @@ export class RelayctlService {
     timer(0, 5000).switchMap(_ => {
       return this.http.get("orders").map(this.extractOrders);
     }).subscribe(o => { 
-      this.ordersObserver.next(o);
+      if(this.ordersObserver){
+        this.ordersObserver.next(o);
+      }
     });
   }
   private updateStatus = () => {
     timer(0, 500).switchMap(_ => {
       return this.http.get("status").map(this.extractStatus);
     }).subscribe(o => { 
-      this.statusObserver.next(o);
+      if(this.statusObserver){
+        this.statusObserver.next(o);
+      }
     });
   }
 

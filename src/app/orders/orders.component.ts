@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RelayctlService, Order, Command } from '../relayctl.service';
 import { NgClass } from '@angular/common';
 import { timer } from 'rxjs/observable/timer';
+import { Utils } from '../utils'
 
 @Component({
   selector: 'app-orders',
@@ -26,6 +27,8 @@ export class OrdersComponent implements OnInit {
     this.addOrderLed=null;
     this.addOrderTimeout=null;
     this.addOrderCommand=null;
+
+    this.now=new Date(Date.now());
   }
 
   ngOnInit() {
@@ -46,17 +49,7 @@ export class OrdersComponent implements OnInit {
     }
   }
   public stringifyDeadline(d: Date){
-    let i = Math.round((d.valueOf()-this.now.valueOf())/1000);
-    if(i<2){
-      return "NOW";
-    }
-    if(i<90){
-      return i+" second(s)";
-    }
-    if(i<3600){
-      return Math.round(i/60)+" minute(s)";
-    }
-    return Math.round(i/3600)+" hour(s)";
+    return Utils.stringifyDeadline(d, this.now);
   }
   public stringifyLedName(n : number){
     return this.relayctl.getLedName(n);

@@ -1,10 +1,29 @@
-<div class="container">
-  <div class="row">
-    <div class="col-4">
-      <app-status></app-status>
+<nav class="navbar navbar-expand-sm bg-light">
+    <div class="container">
+        <h1 class="navbar-brand">RelayCtl<!--img src="assets/logo.png" height="30px"/--></h1>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" routerLink="/basic-relay">Basic relay control</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" routerLink="/advrelay">Advanced relay control</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" routerLink="/status">Status</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" routerLink="/orders">Orders</a>
+            </li>
+        </ul>
+        <!--ul class="navbar-nav">
+            <li class="nav-item" *ngIf="isLoginApplicable">
+                <a class="nav-link" routerLinkActive="active" routerLink="/login">{{loginRefLabel}}</a>
+            </li>
+        </ul-->
     </div>
-    <div class="col-8">
-      <app-orders></app-orders>
-    </div>
-  </div>
+</nav>
+
+
+<div class="container maincontainer">
+  <router-outlet></router-outlet>
 </div>

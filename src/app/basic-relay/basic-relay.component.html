@@ -1,5 +1,5 @@
 <div class="col-12">
-  <h2>Current status</h2>
+  <h2>Basic relay handling</h2>
   <div class="alert alert-danger" role="alert" *ngIf="status.error">
     Error: {{status.error}}
   </div>
@@ -11,5 +11,11 @@
         <img *ngIf="led.value" src="assets/Button_On.png"/>
       </a>
     </div>
+    <div class="col-3">
+      <button class="btn active" 
+        [ngClass]="{'btn-primary': !isSetOffOrder(led.index) &amp;&amp; led.value, 'btn-success': isSetOffOrder(led.index)}"
+        (click)="toggleOffOrder(led.index)">{{whenOff(led.index)}}</button>
+    </div>
+
   </div>
 </div>

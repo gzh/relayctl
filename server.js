@@ -87,10 +87,6 @@ function updateStatus(){
 var app = express();
 app.use(bodyParser.json());
 
-app.get('/', function(req, res) {
-    res.send('Hello Seattle\n');
-});
-
 app.get('/status', function(req, res) {
     res.json(status);
 });
@@ -132,6 +128,7 @@ app.delete('/orders', function(req, res) {
 app.use(ecstatic({
     root: `${__dirname}/dist`,
     showdir: true,
+    index: 'index.html'
 }));
 
 updateStatus();
