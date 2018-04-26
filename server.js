@@ -3,9 +3,18 @@ const ecstatic = require('ecstatic');
 const request = require('request');
 const xml2js = require('xml2js');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const auth = require('http-auth');
+const digest = auth.digest({
+    realm: "relayctl",
+    file: __dirname + "/htdigest.txt"
+});
 
-const baseurl="http://192.168.0.191";
-const devauth={"user": "admin", "pass":"vkmodule", "sendImmediately":true };
+const serverConfig=JSON.parse(fs.readFileSync("server-config.json"));
+
+
+const baseurl="http://"+serverConfig.device.address;
+const devauth={"user": serverConfig.device.auth[0], "pass":serverConfig.device.auth[1], "sendImmediately":true };
 
 var status={
     error: "Not connected",
@@ -85,8 +94,64 @@ function updateStatus(){
 }
 
 var app = express();
+app.use(auth.connect(digest));
 app.use(bodyParser.json());
 
+function accessibleLeds(user){
+    let roles=[];
+    Object.keys(serverConfig.roles).forEach(k => {
+        if(serverConfig.roles[k].find(u => user==u)){
+            roles.push(k);
+        }
+    });
+    let accessible=[];
+    roles.forEach(role => {
+        serverConfig.device.acls[role].forEach(a => {
+            if(!isNaN(parseFloat(a)) && isFinite(a)){
+                accessible.push(a);
+            }
+            else{
+                accessible=accessible.concat(serverConfig.device.groups[a]);
+            }
+        });
+    });
+    return accessible;
+}
+function checkLedsAccessible(leds, req, res){
+    let accessible = accessibleLeds(req.user);
+    let ret=true;
+    leds.forEach(led => {
+        if(accessible.findIndex(x => x==led)<0){
+            res.status(403);
+            res.send("You do not have access to led "+led);
+            ret=false;
+        }
+    });
+    return ret;
+}
+
+app.get('/meta', function(req, res) {
+    let accessible=accessibleLeds(req.user);
+    let aleds=[];
+    let agroups=[];
+    accessible.forEach(a => aleds.push({"index": a, "name": serverConfig.device.leds[a]}));
+    aleds.forEach(a => {
+        Object.keys(serverConfig.device.groups).forEach(g => {
+            if(serverConfig.device.groups[g].findIndex(x => x==a.index)>=0){
+                a["group"]=g;
+                agroups.push(g);
+            }
+        });
+    });
+    agroups.sort();
+    agroups=agroups.filter((value, index, self) => { return self.indexOf(value) === index;}); // uniq
+    let agroupsFull={};
+    agroups.forEach(g => agroupsFull[g]=serverConfig.groups[g]);
+    res.json({
+        "groups": agroupsFull,
+        "leds": aleds,
+    });
+});
 app.get('/status', function(req, res) {
     res.json(status);
 });
@@ -101,6 +166,9 @@ app.post('/orders', function(req, res) {
         res.send("URL parameter led should be specified");
     }
     else {
+        if(!checkLedsAccessible([1*req.query.led], req, res)){
+            return;
+        }
         var order={
             id: id,
             led: 1*req.query.led,
@@ -112,15 +180,25 @@ app.post('/orders', function(req, res) {
     }
 });
 app.delete('/orders/led/:led', function(req, res) {
+    if(!checkLedsAccessible([req.params.led], req, res)){
+        return;
+    }
     console.log("Deleting orders for led "+req.params.led);
     orders = orders.filter((order) => { return order.led != req.params.led; });
     res.json(orders);
 });
 app.delete('/orders/:id', function(req, res) {
+    let o = orders.find(order => order.id==req.params.id);
+    if(o && !checkLedsAccessible([req.params.led], req, res)){
+        return;
+    }
     orders = orders.filter((order) => { return order.id != req.params.id; });
     res.json(orders);
 });
 app.delete('/orders', function(req, res) {
+    if(!checkLedsAccessible(orders.map(o => o.led), req, res)){
+        return;
+    }
     orders = [];
     res.json(orders);
 });

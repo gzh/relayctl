@@ -1,0 +1,44 @@
+{
+    "roles": {
+        "guest": ["guest"],
+        "admin": ["root", "gzh"],
+        "operator": ["peter","john","james"]
+    },
+    "groups": {
+        "cond": {
+            "name": "Air conditioners",
+            "logic": "???"
+        },
+        "vent": {
+            "name": "Ventilation",
+            "logic": "???"
+        },
+        "light": {
+            "name": "Lights",
+            "logic": "..."
+        }
+    },
+    "device": {
+        "address": "192.168.0.191",
+        "auth": ["admin", "vkmodule"],
+        "leds": [
+            "Ventilation",
+            "Conditioner 1",
+            "Conditioner 2",
+            "Conditioner 3",
+            "Conditioner 4",
+            "Conditioner 5",
+            "Conditioner 6",
+            "Conditioner 7"
+        ],
+        "groups": {
+            "vent": [0],
+            "cond": [1,2,3,4,5,6,7]
+        },
+        "acls": {
+            "guest": ["vent", 3, 7],
+            "operator": ["cond"],
+            "admin": ["vent","cond"]
+        }
+    }
+}
