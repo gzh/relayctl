@@ -7,6 +7,7 @@ import { timer } from 'rxjs/observable/timer';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/shareReplay';
 import { switchMap } from 'rxjs/operator/switchMap';
 
@@ -32,6 +33,23 @@ export class Order{
   command: Command;
 }
 
+export class GroupInfo{
+  id: string;
+  name: string;
+  logic: string;
+}
+
+export class LedInfo {
+  index: number;
+  name: string;
+  group: GroupInfo;
+}
+
+export class MetaInfo{
+  groups: Array<GroupInfo>;
+  leds: Array<LedInfo>;
+}
+
 @Injectable()
 export class RelayctlService {
 
@@ -40,13 +58,11 @@ export class RelayctlService {
   private ordersObservable: Observable<Order[]>;
   private ordersObserver: Observer<Order[]>;
 
-  private ledNames: string[];
+  private metaInfo: MetaInfo;
+
 
   constructor(private http: Http) { 
-    this.ledNames=[];
-    for(var k=0; k<8; ++k){
-      this.ledNames.push("Led "+k);
-    }
+    this.http.get("meta").map(this.extractMetaInfo).subscribe(x => {this.metaInfo=x});
 
     this.statusObservable=Observable.create((o: Observer<Status>) => {
       this.statusObserver=o;
@@ -70,7 +86,7 @@ export class RelayctlService {
     timer(0, 5000).switchMap(_ => {
       return this.http.get("orders").map(this.extractOrders);
     }).subscribe(o => { 
-      if(this.ordersObserver){
+      if(this.metaInfo && this.ordersObserver){
         this.ordersObserver.next(o);
       }
     });
@@ -79,7 +95,7 @@ export class RelayctlService {
     timer(0, 500).switchMap(_ => {
       return this.http.get("status").map(this.extractStatus);
     }).subscribe(o => { 
-      if(this.statusObserver){
+      if(this.metaInfo && this.statusObserver){
         this.statusObserver.next(o);
       }
     });
@@ -110,11 +126,16 @@ export class RelayctlService {
       result.error=body.error;
       result.leds=[];
       for(var k=0; k<body.leds.length; ++k){
-        let led = new Led();
-        led.index=k;
-        led.name=this.ledNames[k];
-        led.value=body.leds[k];
-        result.leds.push(led);
+        if(this.metaInfo && this.metaInfo.leds){
+          let ledInfo=this.metaInfo.leds.find(x => x.index==k);
+          if(ledInfo){
+            let led = new Led();
+            led.index=ledInfo.index;
+            led.name=ledInfo.name;
+            led.value=body.leds[k];
+            result.leds.push(led);
+          }
+        }
       }
     }
     else{
@@ -122,6 +143,30 @@ export class RelayctlService {
       result.leds=[];
     }
     return result;
+  }
+  private extractMetaInfo(res: Response){
+    let meta = new MetaInfo();
+    meta.leds=[];
+    meta.groups=[];
+
+    let v=<object>res.json();
+    let groups = v["groups"];
+    Object.keys(groups).forEach(g =>{
+      let ng=new GroupInfo();
+      ng.id=g;
+      ng.name=groups[g].name;
+      ng.logic=groups[g].logic;
+      meta.groups[g]=ng;
+    });
+    let leds = v["leds"];
+    leds.forEach(e => {
+      let led=new LedInfo();
+      led.index=e["index"];
+      led.name=e["name"];
+      led.group=meta.groups[e["group"]];
+      meta.leds.push(led);
+    });
+    return meta;
   }
 
   public addOrder = (led: number, timeout: number, command: Command) => {
@@ -159,14 +204,15 @@ export class RelayctlService {
   }
 
   public getLedName = (n:number) : string => {
-    return this.ledNames[n];
+    return this.metaInfo.leds.find(x => x.index==n).name;
   }
-  public getLedNames = () : object[] => {
-    let res=[];
-    for(var k=0; k<this.ledNames.length; ++k){
-      res.push({index:k, name:this.ledNames[k]});
+  public getLedsInfo() {
+    if(this.metaInfo){
+      return this.metaInfo.leds;
     }
-    return res;
+    else {
+      return [];
+    }
   }
   
 }

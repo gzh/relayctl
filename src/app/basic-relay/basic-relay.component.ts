@@ -35,7 +35,14 @@ export class BasicRelayComponent implements OnInit {
   }
 
   public toggleLed(ledIndex: number){
-    this.relayctl.addOrder(ledIndex, 0, Command.Toggle);
+    let e=this.status.leds.find(x => x.index==ledIndex);
+    if(e && e.value){
+      this.relayctl.removeOrdersForLed(ledIndex);
+      this.relayctl.addOrder(ledIndex, 0, Command.Off);
+    }
+    else{
+      this.relayctl.addOrder(ledIndex, 0, Command.Toggle);
+    }
   }
 
   public toggleOffOrder(ledIndex: number){

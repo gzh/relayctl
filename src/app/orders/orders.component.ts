@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RelayctlService, Order, Command } from '../relayctl.service';
+import { RelayctlService, Order, Command, LedInfo } from '../relayctl.service';
 import { NgClass } from '@angular/common';
 import { timer } from 'rxjs/observable/timer';
 import { Utils } from '../utils'
@@ -19,7 +19,7 @@ export class OrdersComponent implements OnInit {
   addOrderTimeout: number;
   addOrderCommand: Command;
 
-  leds: object[];
+  leds: Array<LedInfo>;
 
   constructor(private relayctl: RelayctlService) { 
     this.orders=[];
@@ -35,7 +35,7 @@ export class OrdersComponent implements OnInit {
     this.relayctl.getOrders().subscribe(
       orders => this.orders=orders
     );
-    this.leds=this.relayctl.getLedNames();
+    this.leds=this.relayctl.getLedsInfo();
     timer(0, 500).subscribe(_ => {
       this.now=new Date(Date.now());
     });
