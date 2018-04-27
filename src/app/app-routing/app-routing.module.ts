@@ -13,8 +13,8 @@ const appRoutes: Routes = [
   { path: 'advrelay', component: AdvrelayComponent, canActivate: [LoginGuardService] },
   { path: 'status', component: StatusComponent, canActivate: [LoginGuardService] },
   { path: 'orders', component: OrdersComponent, canActivate: [LoginGuardService] },
-  { path: '', redirectTo: '/advrelay', pathMatch: 'full' },
-  { path: '**', redirectTo: '/advrelay' } //, component: PageNotFoundComponent }
+  { path: '', redirectTo: '/basic-relay', pathMatch: 'full' },
+  { path: '**', redirectTo: '/basic-relay' } //, component: PageNotFoundComponent }
 ];
 
 

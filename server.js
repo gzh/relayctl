@@ -97,13 +97,29 @@ var app = express();
 app.use(auth.connect(digest));
 app.use(bodyParser.json());
 
-function accessibleLeds(user){
+function userRoles(user){
     let roles=[];
     Object.keys(serverConfig.roles).forEach(k => {
         if(serverConfig.roles[k].find(u => user==u)){
             roles.push(k);
         }
     });
+    return roles;
+}
+function accessibleViews(user){
+    let aviews=[];
+    let roles=userRoles(user);
+    Object.keys(serverConfig.views).forEach(v => {
+        roles.forEach(r => {
+            if(serverConfig.views[v].find(x => x===r)){
+                aviews.push(v);
+            }
+        });
+    });
+    return aviews;
+}
+function accessibleLeds(user){
+    let roles=userRoles(user);
     let accessible=[];
     roles.forEach(role => {
         serverConfig.device.acls[role].forEach(a => {
@@ -131,6 +147,7 @@ function checkLedsAccessible(leds, req, res){
 }
 
 app.get('/meta', function(req, res) {
+    let aviews=accessibleViews(req.user);
     let accessible=accessibleLeds(req.user);
     let aleds=[];
     let agroups=[];
@@ -148,6 +165,7 @@ app.get('/meta', function(req, res) {
     let agroupsFull={};
     agroups.forEach(g => agroupsFull[g]=serverConfig.groups[g]);
     res.json({
+        "views": aviews,
         "groups": agroupsFull,
         "leds": aleds,
     });

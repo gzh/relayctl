@@ -46,6 +46,7 @@ export class LedInfo {
 }
 
 export class MetaInfo{
+  views: Array<string>;
   groups: Array<GroupInfo>;
   leds: Array<LedInfo>;
 }
@@ -58,11 +59,13 @@ export class RelayctlService {
   private ordersObservable: Observable<Order[]>;
   private ordersObserver: Observer<Order[]>;
 
+  private metaInfoObservable: Observable<MetaInfo>;
   private metaInfo: MetaInfo;
 
 
   constructor(private http: Http) { 
-    this.http.get("meta").map(this.extractMetaInfo).subscribe(x => {this.metaInfo=x});
+    this.metaInfoObservable=this.http.get("meta").map(this.extractMetaInfo).shareReplay(1);
+    this.metaInfoObservable.subscribe(x => {this.metaInfo=x});
 
     this.statusObservable=Observable.create((o: Observer<Status>) => {
       this.statusObserver=o;
@@ -150,6 +153,7 @@ export class RelayctlService {
     meta.groups=[];
 
     let v=<object>res.json();
+    meta.views=v["views"];
     let groups = v["groups"];
     Object.keys(groups).forEach(g =>{
       let ng=new GroupInfo();
@@ -201,6 +205,10 @@ export class RelayctlService {
       .map(this.extractOrders).subscribe(o => { 
         this.ordersObserver.next(o);
       });
+  }
+
+  public getViews() : Observable<string[]>{
+    return this.metaInfoObservable.map(x => x.views);
   }
 
   public getLedName = (n:number) : string => {

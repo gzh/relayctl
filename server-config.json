@@ -4,6 +4,10 @@
         "admin": ["root", "gzh"],
         "operator": ["peter","john","james"]
     },
+    "views": {
+        "basic": ["guest","admin","operator"],
+        "advanced": ["admin", "operator"]
+    },
     "groups": {
         "cond": {
             "name": "Air conditioners",
