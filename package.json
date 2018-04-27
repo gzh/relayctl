@@ -27,7 +27,7 @@
     "zone.js": "^0.8.19",
 
     "bootstrap": "4.1.x",
-    "jquery": "1.9.1",
+    "jquery": "3.3.1",
     "popper.js": "^1.14.0",
 
     "express": "4.x",

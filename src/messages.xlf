@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="875c59e003e72ee5b2ce877fdbc2bd95f85f4149" datatype="html">
         <source>RelayCtl</source>
-        <target>КеруванняРеле</target>
+        <target>ПРИСТРОЇ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/app.component.ts</context>
           <context context-type="linenumber">3</context>
@@ -60,6 +60,7 @@
       </trans-unit>
       <trans-unit id="47665a96bfe799c73153e3256610ff4919bc3ece" datatype="html">
         <source>30 seconds</source>
+        <target>30 секунд</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">12</context>
@@ -67,6 +68,7 @@
       </trans-unit>
       <trans-unit id="87e56ee5057023d7e8b59420b838bad112b043bc" datatype="html">
         <source>1 minute</source>
+        <target>1 хвилина</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">13</context>
@@ -74,6 +76,7 @@
       </trans-unit>
       <trans-unit id="affa3b3bf1f36531e5ae65291f8a7cd1b06860ee" datatype="html">
         <source>2 minutes</source>
+        <target>2 хвилини</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">14</context>
@@ -81,6 +84,7 @@
       </trans-unit>
       <trans-unit id="878c6645b7fc26d85c7aee17a9d8c282a938dcf3" datatype="html">
         <source>5 minutes</source>
+        <target>5 хвилин</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -88,6 +92,7 @@
       </trans-unit>
       <trans-unit id="aa0a76140961594b7176ade241e5025a7dbb5dce" datatype="html">
         <source>10 minutes</source>
+        <target>10 хвилин</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">16</context>
@@ -95,6 +100,7 @@
       </trans-unit>
       <trans-unit id="22fdff2f33812f73e51b9223953264d622581910" datatype="html">
         <source>20 minutes</source>
+        <target>20 хвилин</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">17</context>
@@ -102,6 +108,7 @@
       </trans-unit>
       <trans-unit id="601eb137c2dbcfcf927ce857ebf2c2bfe1340574" datatype="html">
         <source>30 minutes</source>
+        <target>30 хвилин</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">18</context>
@@ -109,6 +116,7 @@
       </trans-unit>
       <trans-unit id="123131fd57876c5292a904e302755d2a8aa41182" datatype="html">
         <source>1 hour</source>
+        <target>1 година</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">19</context>
@@ -116,6 +124,7 @@
       </trans-unit>
       <trans-unit id="77f7e5dbe0eca90ee8b5000ef07e87a4171db662" datatype="html">
         <source>2 hours</source>
+        <target>1 години</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -179,6 +188,7 @@
       </trans-unit>
       <trans-unit id="baf81e169d0d415a30d203c18d6180d8ce8b07e9" datatype="html">
         <source>Current status</source>
+        <target>Поточний стан</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/status/status.component.ts</context>
           <context context-type="linenumber">2</context>
