@@ -1,6 +1,6 @@
 <div class="col-12">
-  <h2>Current status</h2>
-  <div class="alert alert-danger" role="alert" *ngIf="status.error">
+  <h2 i18n>Current status</h2>
+  <div class="alert alert-danger" role="alert" *ngIf="status.error" i18n>
     Error: {{status.error}}
   </div>
   <div class="row" *ngFor="let led of status.leds">

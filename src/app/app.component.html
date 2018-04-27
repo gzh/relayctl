@@ -1,18 +1,18 @@
 <nav class="navbar navbar-expand-sm bg-light">
     <div class="container">
-        <h1 class="navbar-brand">RelayCtl<!--img src="assets/logo.png" height="30px"/--></h1>
+        <h1 class="navbar-brand" i18n>RelayCtl<!--img src="assets/logo.png" height="30px"/--></h1>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" *ngIf="viewEnabled('basic')  | async">
-                <a class="nav-link" routerLinkActive="active" routerLink="/basic-relay">Basic relay control</a>
+                <a class="nav-link" routerLinkActive="active" routerLink="/basic-relay" i18n>Basic relay control</a>
             </li>
             <li class="nav-item" *ngIf="viewEnabled('advanced') | async">
-                <a class="nav-link" routerLinkActive="active" routerLink="/advrelay">Advanced relay control</a>
+                <a class="nav-link" routerLinkActive="active" routerLink="/advrelay" i18n>Advanced relay control</a>
             </li>
             <li class="nav-item" *ngIf="viewEnabled('status') | async">
-                <a class="nav-link" routerLinkActive="active" routerLink="/status">Status</a>
+                <a class="nav-link" routerLinkActive="active" routerLink="/status" i18n>Status</a>
             </li>
             <li class="nav-item" *ngIf="viewEnabled('orders') | async">
-                <a class="nav-link" routerLinkActive="active" routerLink="/orders">Orders</a>
+                <a class="nav-link" routerLinkActive="active" routerLink="/orders" i18n>Orders</a>
             </li>
         </ul>
         <!--ul class="navbar-nav">

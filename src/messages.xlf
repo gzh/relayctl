@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="uk" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="875c59e003e72ee5b2ce877fdbc2bd95f85f4149" datatype="html">
+        <source>RelayCtl</source>
+        <target>КеруванняРеле</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8f8af245c1e598e36c2dcdf4f657da7bdb23b80d" datatype="html">
+        <source>Basic relay control</source>
+        <target>Базове керування</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="50669bfe4172dd80d9c5b5e1c3a92e16f65817b9" datatype="html">
+        <source>Advanced relay control</source>
+        <target>Просунуте керування</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
+        <source>Status</source>
+        <target>Стан</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4e7f5f07ae8e67878f35b34bcee10e39300ff41a" datatype="html">
+        <source>Orders</source>
+        <target>Команди</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="388a2e3d6deaa779638e4a5bdceedc58e7e69e7d" datatype="html">
+        <source>Active orders</source>
+        <target>Активні накази</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5de309d14189128fac6bd9335c703565b7eecacb" datatype="html">
+        <source>Timeout</source>
+        <target>Таймаут</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="47665a96bfe799c73153e3256610ff4919bc3ece" datatype="html">
+        <source>30 seconds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="87e56ee5057023d7e8b59420b838bad112b043bc" datatype="html">
+        <source>1 minute</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="affa3b3bf1f36531e5ae65291f8a7cd1b06860ee" datatype="html">
+        <source>2 minutes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="878c6645b7fc26d85c7aee17a9d8c282a938dcf3" datatype="html">
+        <source>5 minutes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aa0a76140961594b7176ade241e5025a7dbb5dce" datatype="html">
+        <source>10 minutes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="22fdff2f33812f73e51b9223953264d622581910" datatype="html">
+        <source>20 minutes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="601eb137c2dbcfcf927ce857ebf2c2bfe1340574" datatype="html">
+        <source>30 minutes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="123131fd57876c5292a904e302755d2a8aa41182" datatype="html">
+        <source>1 hour</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="77f7e5dbe0eca90ee8b5000ef07e87a4171db662" datatype="html">
+        <source>2 hours</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4c9e898707b87b70f1b88ad110c78c5e52608fc9" datatype="html">
+        <source>Command</source>
+        <target>Команда</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="670572759a7edced1a9df2e1a513e2d863259ad7" datatype="html">
+        <source>SWITCH ON</source>
+        <target>Увімкнути</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9b6f97000c0b49adfe8e78f3efd7d12499b89575" datatype="html">
+        <source>SWITCH OFF</source>
+        <target>Вимкнути</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="45accdb4e4b94814c96c5cacf7ffea7b2b1888ec" datatype="html">
+        <source>Add order</source>
+        <target>Додати наказ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d7b35c384aecd25a516200d6921836374613dfe7" datatype="html">
+        <source>Cancel</source>
+        <target>Скасувати</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d59fb8b69c76d4272e6600b69ce6578d4cf1f075" datatype="html">
+        <source>Total: <x id="INTERPOLATION" equiv-text="{{orders.length}}"/> order(s)</source>
+        <target>Всього:  <x id="INTERPOLATION" equiv-text="{{orders.length}}"/> наказ(ів)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a7fc22ae93cdc385487cbd84b78e13d10e9dff95" datatype="html">
+        <source>Cancel all orders</source>
+        <target>Скасувати всі накази</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="baf81e169d0d415a30d203c18d6180d8ce8b07e9" datatype="html">
+        <source>Current status</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/status/status.component.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e99c4234c9fe174731d0d035eb49a77954ea90f6" datatype="html">
+        <source>Error: <x id="INTERPOLATION" equiv-text="{{status.error}}"/></source>
+        <target>Помилка: <x id="INTERPOLATION" equiv-text="{{status.error}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/status/status.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="28f28ecdc06d1034ed1950934c564ccc14762610" datatype="html">
+        <source>Basic relay handling</source>
+        <target>Базове керування реле</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/basic-relay/basic-relay.component.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
