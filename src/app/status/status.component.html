@@ -3,7 +3,7 @@
   <div class="alert alert-danger" role="alert" *ngIf="status.error" i18n>
     Error: {{status.error}}
   </div>
-  <div class="row" *ngFor="let led of status.leds">
+  <div class="row mt-2" *ngFor="let led of status.leds">
     <div class="col-6">{{led.name}}</div>
     <div class="col-3">
       <a style="cursor: pointer" class="active" (click)="toggleLed(led.index)">
