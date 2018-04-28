@@ -271,7 +271,7 @@ app.delete('/orders/led/:led', function(req, res) {
 });
 app.delete('/orders/:id', function(req, res) {
     let o = orders.find(order => order.id==req.params.id);
-    if(o && !checkLedsAccessible([req.params.led], req, res)){
+    if(o && !checkLedsAccessible([o.led], req, res)){
         return;
     }
     orders = orders.filter((order) => { return order.id != req.params.id; });

@@ -9,7 +9,10 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/shareReplay';
+import 'rxjs/observable/forkJoin';
 import { switchMap } from 'rxjs/operator/switchMap';
+
+import { WebSocketSubject } from 'rxjs/observable/dom/WebSocketSubject';
 
 export class Led{
   index: number;
@@ -51,6 +54,11 @@ export class MetaInfo{
   leds: Array<LedInfo>;
 }
 
+export class UpdateMessage{
+  status: object;
+  orders: object;
+}
+
 @Injectable()
 export class RelayctlService {
 
@@ -62,10 +70,15 @@ export class RelayctlService {
   private metaInfoObservable: Observable<MetaInfo>;
   private metaInfo: MetaInfo;
 
+  private socket: WebSocketSubject<UpdateMessage>;
 
   constructor(private http: Http) { 
+
     this.metaInfoObservable=this.http.get("meta").map(this.extractMetaInfo).shareReplay(1);
-    this.metaInfoObservable.subscribe(x => {this.metaInfo=x});
+    this.metaInfoObservable.subscribe(x => {
+      this.metaInfo=x;
+      this.subscribeWebsocket();
+    });
 
     this.statusObservable=Observable.create((o: Observer<Status>) => {
       this.statusObserver=o;
@@ -74,8 +87,32 @@ export class RelayctlService {
       this.ordersObserver=o;
     }).shareReplay(1);
 
-    this.updateStatus();
-    this.updateOrders();
+    //this.updateStatus();
+    //this.updateOrders();
+  }
+
+  private subscribeWebsocket = () => {
+    this.socket=WebSocketSubject.create(this.buildWebsockUri());
+    this.socket.subscribe(message => {
+      if(message.status){
+        this.statusObserver.next(this.extractStatusData(message.status, null));
+      }
+      if(message.orders){
+        this.ordersObserver.next(this.extractOrdersData(message.orders));
+      }
+    });
+  }
+  private buildWebsockUri(): string{
+    let loc = window.location
+    let new_uri : string;
+    if (loc.protocol === "https:") {
+        new_uri = "wss:";
+    } else {
+        new_uri = "ws:";
+    }
+    new_uri += "//" + loc.host;
+    new_uri += "/ws"; // <-- according to what the server exposes
+    return new_uri;    
   }
 
   getOrders(): Observable<Order[]>{
@@ -104,9 +141,13 @@ export class RelayctlService {
     });
   }
 
-  private extractOrders(res: Response){
-    var result=[];
+  private extractOrders = (res: Response) => {
     let body=<any>res.json();
+    return this.extractOrdersData(body);
+  }
+
+  private extractOrdersData = (body: any) => {
+    var result=[];
     body.forEach(e => {
       let o=new Order();
       o.id=e.id;
@@ -123,8 +164,11 @@ export class RelayctlService {
     return result;
   }
   private extractStatus = (res: Response) => {
-    var result=new Status();
     let body=<any>res.json();
+    return this.extractStatusData(body, res);
+  }
+  private extractStatusData = (body: any, res: Response) => {
+    var result=new Status();
     if(body){
       result.error=body.error;
       result.leds=[];
