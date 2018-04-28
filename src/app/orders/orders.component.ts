@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RelayctlService, Order, Command, LedInfo } from '../relayctl.service';
 import { NgClass } from '@angular/common';
 import { timer } from 'rxjs/observable/timer';
+import { Subscription } from 'rxjs/Subscription';
 import { Utils } from '../utils'
 
 @Component({
@@ -10,8 +11,9 @@ import { Utils } from '../utils'
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css']
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
 
+  subscriptions: Array<Subscription> = [];
   orders: Order[];
   private now: Date;
 
@@ -35,13 +37,16 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.relayctl.getOrders().subscribe(
+    this.subscriptions.push(this.relayctl.getOrders().subscribe(
       orders => this.orders=orders
-    );
+    ));
     this.leds=this.relayctl.getLedsInfo();
-    timer(0, 500).subscribe(_ => {
+    this.subscriptions.push(timer(0, 500).subscribe(_ => {
       this.now=new Date(Date.now());
-    });
+    }));
+  }
+  ngOnDestroy(){
+    this.subscriptions.forEach(s => { s.unsubscribe() });
   }
 
   public stringifyDeadline(d: Date){

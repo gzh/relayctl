@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RelayctlService, Order, Status, Command } from '../relayctl.service';
 import { timer } from 'rxjs/observable/timer';
+import { Subscription } from 'rxjs/Subscription';
 import { Utils } from '../utils'
 
 @Component({
@@ -8,8 +9,9 @@ import { Utils } from '../utils'
   templateUrl: './basic-relay.component.html',
   styleUrls: ['./basic-relay.component.css']
 })
-export class BasicRelayComponent implements OnInit {
+export class BasicRelayComponent implements OnInit, OnDestroy {
 
+  subscriptions: Array<Subscription> = [];
   status : Status;
   orders : Order[];
   now : Date;
@@ -23,15 +25,18 @@ export class BasicRelayComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.relayctl.getStatus().subscribe(
+    this.subscriptions.push(this.relayctl.getStatus().subscribe(
       status => this.status=status
-    );
-    this.relayctl.getOrders().subscribe(
+    ));
+    this.subscriptions.push(this.relayctl.getOrders().subscribe(
       orders => this.orders=orders
-    );
-    timer(0, 2000).subscribe(_ => {
+    ));
+    this.subscriptions.push(timer(0, 2000).subscribe(_ => {
       this.now=new Date(Date.now());
-    });
+    }));
+  }
+  ngOnDestroy(){
+    this.subscriptions.forEach(s => { s.unsubscribe() });
   }
 
   public toggleLed(ledIndex: number){

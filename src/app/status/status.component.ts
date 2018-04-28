@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 import { RelayctlService, Status, Command } from '../relayctl.service';
 
 @Component({
@@ -6,8 +7,10 @@ import { RelayctlService, Status, Command } from '../relayctl.service';
   templateUrl: './status.component.html',
   styleUrls: ['./status.component.css']
 })
-export class StatusComponent implements OnInit {
+export class StatusComponent implements OnInit, OnDestroy {
 
+  
+  subscriptions: Array<Subscription> = [];
   status : Status;
 
   constructor(private relayctl: RelayctlService) { 
@@ -17,9 +20,12 @@ export class StatusComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.relayctl.getStatus().subscribe(
+    this.subscriptions.push(this.relayctl.getStatus().subscribe(
       status => this.status=status
-    );
+    ));
+  }
+  ngOnDestroy(){
+    this.subscriptions.forEach(s => { s.unsubscribe() });
   }
 
   public toggleLed(ledIndex: number){
