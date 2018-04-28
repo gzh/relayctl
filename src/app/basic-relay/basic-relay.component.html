@@ -12,9 +12,18 @@
       </a>
     </div>
     <div class="col-2">
+      <button class="btn active btn-success" 
+        (click)="removeOrders(led.index)" 
+        *ngIf="led.value &amp;&amp; whenOff(led.index) &gt;= 0" 
+        i18n>Goes off {{whenOff(led.index) | timeInterval:'in':'NOW'}}</button>
+      <button class="btn active btn-primary" 
+        (click)="setOffOrder(led.index, 1200)" 
+        *ngIf="led.value &amp;&amp; whenOff(led.index) &lt; 0"
+        i18n>Turn off in 20 minutes</button>
       <button class="btn active" 
-        [ngClass]="{'btn-primary': !isSetOffOrder(led.index) &amp;&amp; led.value, 'btn-success': isSetOffOrder(led.index)}"
-        (click)="toggleOffOrder(led.index)">{{whenOff(led.index)}}</button>
+        (click)="turnOnFor(led.index, 1200)" 
+        *ngIf="!led.value"
+        i18n>Turn on for 20 minutes</button>
     </div>
 
   </div>

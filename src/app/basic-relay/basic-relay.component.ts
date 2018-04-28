@@ -45,25 +45,28 @@ export class BasicRelayComponent implements OnInit {
     }
   }
 
-  public toggleOffOrder(ledIndex: number){
-    if(!this.isSetOffOrder(ledIndex)){
-      this.relayctl.addOrder(ledIndex, 1200, Command.Off);
-    }
-    else{
-      this.relayctl.removeOrdersForLed(ledIndex);
-    }
+  public removeOrders(ledIndex: number){
+    this.relayctl.removeOrdersForLed(ledIndex);
   }
+  public setOffOrder(ledIndex: number, interval: number){
+    this.relayctl.addOrder(ledIndex, interval, Command.Off);
+  }
+  public turnOnFor(ledIndex: number, interval: number){
+    this.relayctl.removeOrdersForLed(ledIndex);
+    this.relayctl.addOrder(ledIndex, 0, Command.On);
+    this.relayctl.addOrder(ledIndex, interval, Command.Off);
+  }
+  
   public isSetOffOrder(ledIndex: number) {
     return this.orders.findIndex(o => { return o.led==ledIndex && o.command==Command.Off })>=0;
   }
-  public whenOff(ledIndex: number) : string {
-    let default20mins="Turn OFF in 20 minutes";
+  public whenOff(ledIndex: number) : number {
     let o = this.orders.find(o => { return o.led==ledIndex && o.command==Command.Off });
     if(o){
-      return "Goes off in "+Utils.stringifyDeadline(o.deadline, this.now);
+      return Math.max(0, o.deadline.valueOf() - this.now.valueOf());
     }
     else{
-      return default20mins;
+      return -1;
     }
   }
 

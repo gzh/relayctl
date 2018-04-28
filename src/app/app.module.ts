@@ -11,6 +11,7 @@ import { StatusComponent } from './status/status.component';
 import { AdvrelayComponent } from './advrelay/advrelay.component';
 import { LoginGuardService } from './login-guard.service';
 import { BasicRelayComponent } from './basic-relay/basic-relay.component';
+import { TimeIntervalPipe } from './time-interval.pipe';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { BasicRelayComponent } from './basic-relay/basic-relay.component';
     OrdersComponent,
     StatusComponent,
     AdvrelayComponent,
-    BasicRelayComponent
+    BasicRelayComponent,
+    TimeIntervalPipe
   ],
   imports: [
     BrowserModule,

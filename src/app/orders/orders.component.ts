@@ -48,8 +48,8 @@ export class OrdersComponent implements OnInit {
     return Utils.stringifyDeadline(d, this.now);
   }
 
-  public secondsToDeadline(d: Date){
-    return Math.max(0,Math.round(d.valueOf()-this.now.valueOf())/1000);
+  public timeToDeadline(d: Date){
+    return Math.max(0,Math.round(d.valueOf()-this.now.valueOf()));
   }
 
   public stringifyLedName(n : number){

@@ -36,9 +36,7 @@
   <div class="col-3">
     {{stringifyLedName(order.led)}}
   </div>
-  <div class="col-3">
-    {{stringifyDeadline(order.deadline)}}
-  </div>
+  <div class="col-3" i18n>{{timeToDeadline(order.deadline) | timeInterval:'In':'NOW'}}</div>
   <div class="col-3">
     <span *ngIf="order.command==Command.Off" color="#800" i18n>SWITCH OFF</span>
     <span *ngIf="order.command==Command.On" color="#080" i18n>SWITCH ON</span>

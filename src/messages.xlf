@@ -226,6 +226,38 @@
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="8d2a3d989135cb4cf9616b3b73d5531dcf0a32bf" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{timeToDeadline(order.deadline) | timeInterval:&apos;In&apos;:&apos;NOW&apos;}}"/></source>
+        <target><x id="INTERPOLATION" equiv-text="{{timeToDeadline(order.deadline) | timeInterval:&apos;За&apos;:&apos;ЗАРАЗ&apos;}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7d3113b9c26448b054d592391917706439475be6" datatype="html">
+        <source>Goes off <x id="INTERPOLATION" equiv-text="{{whenOff(led.index) | timeInterval:&apos;in&apos;:&apos;NOW&apos;}}"/></source>
+        <target>Вимкнеться <x id="INTERPOLATION" equiv-text="{{whenOff(led.index) | timeInterval:&apos;за&apos;:&apos;ЗАРАЗ&apos;}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/basic-relay/basic-relay.component.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="daec3e682bbeae027bdab6edc9793a298c82fb39" datatype="html">
+        <source>Turn off in 20 minutes</source>
+        <target>Вимкнути за 20 хвилин</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/basic-relay/basic-relay.component.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b5f6126e7e79b43d6cd88f28d594bd43623d9790" datatype="html">
+        <source>Turn on for 20 minutes</source>
+        <target>Увімкнути на 20 хвилин</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/basic-relay/basic-relay.component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>
