@@ -35,7 +35,8 @@
     "request": "2.x",
     "xml2js": "0.4.x",
     "body-parser": "1.18.x",
-    "http-auth": "3.2.x"
+    "http-auth": "3.2.x",
+    "express-ws": "3.0.0"
   },
   "devDependencies": {
     "@angular/cli": "~1.7.4",

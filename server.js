@@ -1,5 +1,6 @@
 const express = require('express');
 const ecstatic = require('ecstatic');
+const expressWs = require('express-ws');
 const request = require('request');
 const xml2js = require('xml2js');
 const bodyParser = require('body-parser');
@@ -9,6 +10,11 @@ const digest = auth.digest({
     realm: "relayctl",
     file: __dirname + "/htdigest.txt"
 });
+
+const Observable = require('rxjs/Observable').Observable;
+const Observer = require('rxjs/Observer').Observer;
+require('rxjs/add/operator/shareReplay');
+
 
 const serverConfig=JSON.parse(fs.readFileSync("server-config.json"));
 
@@ -22,6 +28,25 @@ var status={
 };
 var orders=[];
 var orderId=1;
+
+var wsStatusObserver;
+var wsStatusObservable=Observable.create(o => {
+    wsStatusObserver=o;
+    o.next(status);
+}).shareReplay(1);
+var wsOrdersObserver;
+var wsOrdersObservable=Observable.create(o => {
+    wsOrdersObserver=o;
+    o.next(orders);
+}).shareReplay(1);
+
+wsStatusObservable.subscribe(x => {
+    console.log("New status: "+JSON.stringify(x));
+});
+wsOrdersObservable.subscribe(x => {
+    console.log("New orders: "+JSON.stringify(x));
+});
+
 
 function toggleLed(led){
     request({"url": baseurl+"/protect/leds.cgi", "auth":devauth, "qs": {"led":led,"timeout":0}},
@@ -40,15 +65,19 @@ function updateStatus(){
         "auth": devauth
     },
             (deverr, devres, devbody) => {
+                let prev_status=Object.assign({}, status);
+                let sendOrders=false;
+                let timeout=500;
                 if (deverr) {
                     console.log("No access to the device: "+deverr);
                     status.error = "Network error" ;
                     var expiring=orders.filter((o)=>{ return o.deadline <= now; });
                     orders=orders.filter((o)=>{ return o.deadline > now; });
                     if(expiring.length>0){
+                        sendOrders=true;
                         console.log("Some orders has expired while device is inaccessible: "+expiring);
                     }
-                    setTimeout(updateStatus, 5000);
+                    timeout=5000;
                 }
                 else {
                     //console.log(devbody);
@@ -76,6 +105,7 @@ function updateStatus(){
                     var expiring=orders.filter((o)=>{ return o.deadline <= now; });
                     orders=orders.filter((o)=>{ return o.deadline > now; });
                     if(expiring.length){
+                        sendOrders=true;
                         expiring.forEach((order) => {
                             console.log("About to execute order: ", order);
                             if(order.command == status.leds[order.led]){
@@ -87,13 +117,45 @@ function updateStatus(){
                             }
                         });
                     }
-                    setTimeout(updateStatus, 500);
+                    timeout=500;
                 }
+                if(wsOrdersObserver && sendOrders){
+                    wsOrdersObserver.next(orders);
+                }
+                if(wsStatusObserver && !(JSON.stringify(prev_status)===JSON.stringify(status))){
+                    wsStatusObserver.next(status);
+                }
+                setTimeout(updateStatus, 500);
             });
     
 }
 
-var app = express();
+var app = expressWs(express()).app;
+
+// setup websocket handler before setting up the auth
+app.ws("/ws", function(ws, req){
+    console.log("New WebSocket request");
+    let subs=[];
+    
+    subs.push(wsStatusObservable.subscribe(s => {
+        console.log("about to send status:", s);
+        ws.send(JSON.stringify({"status":s}));
+    }));
+    subs.push(wsOrdersObservable.subscribe(s => {
+        ws.send(JSON.stringify({"orders":s}));
+    }));
+    console.log("subscribed");
+    
+    ws.on('message', function(msg) {
+        console.log(msg);
+    });
+    ws.on('close', () => {
+        console.log("Closing websocket connection");
+        subs.forEach(s => { s.unsubscribe(); });
+    });
+});
+
+
 app.use(auth.connect(digest));
 app.use(bodyParser.json());
 
@@ -194,6 +256,7 @@ app.post('/orders', function(req, res) {
             command: req.query.command?(1*req.query.command):-1
         };
         orders.push(order);
+        wsOrdersObserver.next(orders);
         res.json(orders);
     }
 });
@@ -203,6 +266,7 @@ app.delete('/orders/led/:led', function(req, res) {
     }
     console.log("Deleting orders for led "+req.params.led);
     orders = orders.filter((order) => { return order.led != req.params.led; });
+    wsOrdersObserver.next(orders);
     res.json(orders);
 });
 app.delete('/orders/:id', function(req, res) {
@@ -211,6 +275,7 @@ app.delete('/orders/:id', function(req, res) {
         return;
     }
     orders = orders.filter((order) => { return order.id != req.params.id; });
+    wsOrdersObserver.next(orders);
     res.json(orders);
 });
 app.delete('/orders', function(req, res) {
@@ -218,6 +283,7 @@ app.delete('/orders', function(req, res) {
         return;
     }
     orders = [];
+    wsOrdersObserver.next(orders);
     res.json(orders);
 });
 
