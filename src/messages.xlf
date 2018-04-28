@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="77f7e5dbe0eca90ee8b5000ef07e87a4171db662" datatype="html">
         <source>2 hours</source>
-        <target>1 години</target>
+        <target>2 години</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">20</context>
@@ -140,7 +140,7 @@
       </trans-unit>
       <trans-unit id="670572759a7edced1a9df2e1a513e2d863259ad7" datatype="html">
         <source>SWITCH ON</source>
-        <target>Увімкнути</target>
+        <target>УВІМКНУТИ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">26</context>
@@ -148,7 +148,7 @@
       </trans-unit>
       <trans-unit id="9b6f97000c0b49adfe8e78f3efd7d12499b89575" datatype="html">
         <source>SWITCH OFF</source>
-        <target>Вимкнути</target>
+        <target>ВИМКНУТИ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/orders/orders.component.ts</context>
           <context context-type="linenumber">27</context>
@@ -208,6 +208,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/basic-relay/basic-relay.component.ts</context>
           <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="25b19c4e05e0d9f7ad4464db395d6971e2e13ef7" datatype="html">
+        <source>TOGGLE</source>
+        <target>ПЕРЕМКНУТИ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ac17f3ce0d383e37f67546df446b6dabda3f9af2" datatype="html">
+        <source>Led</source>
+        <target>Перемикач</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/orders/orders.component.ts</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
     </body>

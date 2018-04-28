@@ -4,14 +4,14 @@
     Error: {{status.error}}
   </div>
   <div class="row" *ngFor="let led of status.leds">
-    <div class="col-6">{{led.name}}</div>
-    <div class="col-3">
+    <div class="col-3">{{led.name}}</div>
+    <div class="col-2">
       <a style="cursor: pointer" class="active" (click)="toggleLed(led.index)">
         <img *ngIf="!led.value" src="assets/Button_Off.png"/>
         <img *ngIf="led.value" src="assets/Button_On.png"/>
       </a>
     </div>
-    <div class="col-3">
+    <div class="col-2">
       <button class="btn active" 
         [ngClass]="{'btn-primary': !isSetOffOrder(led.index) &amp;&amp; led.value, 'btn-success': isSetOffOrder(led.index)}"
         (click)="toggleOffOrder(led.index)">{{whenOff(led.index)}}</button>

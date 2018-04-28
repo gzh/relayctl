@@ -19,9 +19,12 @@ export class OrdersComponent implements OnInit {
   addOrderTimeout: number;
   addOrderCommand: Command;
 
+  Command: any;
+
   leds: Array<LedInfo>;
 
   constructor(private relayctl: RelayctlService) { 
+    this.Command=Command;
     this.orders=[];
 
     this.addOrderLed=null;
@@ -41,16 +44,14 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  public stringifyCommand(c: Command) : string {
-    switch(c){
-      case Command.Off: return "SWITCH OFF";
-      case Command.On: return "SWITCH ON";
-      case Command.Toggle: return "TOGGLE";
-    }
-  }
   public stringifyDeadline(d: Date){
     return Utils.stringifyDeadline(d, this.now);
   }
+
+  public secondsToDeadline(d: Date){
+    return Math.max(0,Math.round(d.valueOf()-this.now.valueOf())/1000);
+  }
+
   public stringifyLedName(n : number){
     return this.relayctl.getLedName(n);
   }

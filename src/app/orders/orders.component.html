@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-3">
     <select class="form-control" [(ngModel)]="addOrderLed" name="led" placeholder="Led">
-      <option [ngValue]="null" disabled>Led</option>
+      <option [ngValue]="null" disabled i18n>Led</option>
       <option *ngFor="let led of leds" [ngValue]="led.index">{{led.name}}</option>
     </select>
   </div>
@@ -40,7 +40,9 @@
     {{stringifyDeadline(order.deadline)}}
   </div>
   <div class="col-3">
-    {{stringifyCommand(order.command)}}
+    <span *ngIf="order.command==Command.Off" color="#800" i18n>SWITCH OFF</span>
+    <span *ngIf="order.command==Command.On" color="#080" i18n>SWITCH ON</span>
+    <span *ngIf="order.command==Command.Toggle" color="#008" i18n>TOGGLE</span>
   </div>
   <div class="col-3">
     <button class="btn active btn-warning" (click)="cancelOrder(order.id)" i18n>Cancel</button>
