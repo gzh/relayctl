@@ -53,5 +53,5 @@ relay indices) or strings (which are relay group names).
 
 ## Build
 
-Run `npm install && ng build --prod --aot`
-
+Run `npm install && ng build --prod --aot --locale uk --i18n-file src/messages.uk.xlf`
+(where `--locale uk --i18n-file src/messages.uk.xlf` is to build UI in Ukrainian).
