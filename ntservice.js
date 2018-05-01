@@ -29,7 +29,7 @@ if(process.argv.find(x => x==="install")){
 }
 else if(process.argv.find(x => x==="uninstall")){
     console.log("Going to uninstall the service");
-    svc.install();
+    svc.uninstall();
 }
 else{
     console.log("Usage: node ntservice.js install OR node ntservice.js uninstall");

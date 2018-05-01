@@ -55,3 +55,8 @@ relay indices) or strings (which are relay group names).
 
 Run `npm install && ng build --prod --aot --locale uk --i18n-file src/messages.uk.xlf`
 (where `--locale uk --i18n-file src/messages.uk.xlf` is to build UI in Ukrainian).
+
+## Install as Win32 service
+
+Run `node ntservice.js install` to add an NT service named
+"RelayCtl". Run `node ntservice.hs uninstall` to remove the service.
