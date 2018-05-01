@@ -9,7 +9,7 @@ if (environment.production) {
 }
 
 declare const require;
-const translations = require(`raw-loader!./messages.xlf`);
+const translations = require(`raw-loader!./messages.uk.xlf`);
 
 platformBrowserDynamic().bootstrapModule(AppModule, {
   providers: [

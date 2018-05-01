@@ -18,6 +18,7 @@ export class Led{
   index: number;
   name: string;
   value: boolean;
+  since: Date;
 }
 
 export class Status {
@@ -170,6 +171,7 @@ export class RelayctlService {
   private extractStatusData = (body: any, res: Response) => {
     var result=new Status();
     if(body){
+      console.log(body);
       result.error=body.error;
       result.leds=[];
       for(var k=0; k<body.leds.length; ++k){
@@ -180,6 +182,7 @@ export class RelayctlService {
             led.index=ledInfo.index;
             led.name=ledInfo.name;
             led.value=body.leds[k];
+            led.since=body.since[k];
             result.leds.push(led);
           }
         }

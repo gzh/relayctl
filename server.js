@@ -81,6 +81,7 @@ function updateStatus(){
                 }
                 else {
                     //console.log(devbody);
+                    var now=Date.now();
                     xml2js.parseString(devbody, (err, res) => {
                         if(err){
                             console.log(devbody);
@@ -99,9 +100,22 @@ function updateStatus(){
                                 1*res.response.led6[0],
                                 1*res.response.led7[0],
                             ];
+                            if(!status.since){
+                                status.since=[];
+                            }
+                            for(let k=0; k<8; ++k){
+                                if(prev_status.since
+                                   && prev_status.since[k]
+                                   && prev_status.leds
+                                   && (status.leds[k]===prev_status.leds[k])){
+                                    //status.since[k]=prev_status.since[k];
+                                }
+                                else{
+                                    status.since[k]=now;
+                                }
+                            }
                         }
                     });
-                    var now=Date.now();
                     var expiring=orders.filter((o)=>{ return o.deadline <= now; });
                     orders=orders.filter((o)=>{ return o.deadline > now; });
                     if(expiring.length){

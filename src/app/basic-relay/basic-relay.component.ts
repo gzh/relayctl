@@ -75,4 +75,14 @@ export class BasicRelayComponent implements OnInit, OnDestroy {
     }
   }
 
+  public since(ledIndex: number) : number {
+    let led=this.status.leds.find(o => o.index==ledIndex);
+    if(led){
+      return Math.max(0, this.now.valueOf()-led.since.valueOf());
+    }
+    else{
+      return 0;
+    }
+  }
+
 }

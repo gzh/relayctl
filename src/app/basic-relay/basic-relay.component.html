@@ -4,13 +4,14 @@
     Error: {{status.error}}
   </div>
   <div class="row mt-3" *ngFor="let led of status.leds">
-    <div class="col-3">{{led.name}}</div>
-    <div class="col-2">
+    <div class="col-4">{{led.name}}</div>
+    <div class="col-3">
       <a style="cursor: pointer" class="active" (click)="toggleLed(led.index)">
         <img [src]="led.value?'assets/Button_On.png':'assets/Button_Off.png'"/>
-      </a>
+      </a>&nbsp;&nbsp;&nbsp;
+      <span class="badge" [ngClass]="{'badge-secondary': !led.value, 'badge-success': led.value}">{{since(led.index) | timeInterval:'':'JUST NOW'}}</span>      
     </div>
-    <div class="col-2">
+    <div class="col-3">
       <button class="btn active btn-success" 
         (click)="removeOrders(led.index)" 
         *ngIf="led.value &amp;&amp; whenOff(led.index) &gt;= 0" 
@@ -24,6 +25,5 @@
         *ngIf="!led.value"
         i18n>Turn on for 20 minutes</button>
     </div>
-
   </div>
 </div>
