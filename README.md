@@ -18,7 +18,7 @@ The command to run the server is `node server.js`.
 
 See/edit `server-config.json`. There is also `htdigest.txt` which can
 be maintained with `htdigest` tool from Apache or installed separately
-via `npm install htdigest`.
+via `npm install htdigest -g`.
 
 Sections of config:
 

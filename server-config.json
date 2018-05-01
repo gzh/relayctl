@@ -27,7 +27,7 @@
         "address": "192.168.0.191",
         "auth": ["admin", "vkmodule"],
         "leds": [
-            "Ventilation",
+            "Вентиляція",
             "Conditioner 1",
             "Conditioner 2",
             "Conditioner 3",
