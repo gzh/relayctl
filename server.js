@@ -68,6 +68,7 @@ function updateStatus(){
                 let prev_status=Object.assign({}, status);
                 let sendOrders=false;
                 let timeout=500;
+                let now=Date.now();
                 if (deverr) {
                     console.log("No access to the device: "+deverr);
                     status.error = "Network error" ;
@@ -81,7 +82,6 @@ function updateStatus(){
                 }
                 else {
                     //console.log(devbody);
-                    var now=Date.now();
                     xml2js.parseString(devbody, (err, res) => {
                         if(err){
                             console.log(devbody);
