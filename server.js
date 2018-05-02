@@ -14,6 +14,7 @@ const digest = auth.digest({
 const Observable = require('rxjs/Observable').Observable;
 const Observer = require('rxjs/Observer').Observer;
 require('rxjs/add/operator/shareReplay');
+require('rxjs/add/operator/share');
 
 
 const serverConfig=JSON.parse(fs.readFileSync("server-config.json"));
@@ -28,6 +29,7 @@ var status={
 };
 var orders=[];
 var orderId=1;
+var timestamp=Date.now();
 
 var wsStatusObserver;
 var wsStatusObservable=Observable.create(o => {
@@ -39,13 +41,10 @@ var wsOrdersObservable=Observable.create(o => {
     wsOrdersObserver=o;
     o.next(orders);
 }).shareReplay(1);
-
-wsStatusObservable.subscribe(x => {
-    console.log("New status: "+JSON.stringify(x));
-});
-wsOrdersObservable.subscribe(x => {
-    console.log("New orders: "+JSON.stringify(x));
-});
+var wsTimestampObserver;
+var wsTimestampObservable=Observable.create(o => {
+    wsTimestampObserver=o;
+}).share();
 
 
 function toggleLed(led){
@@ -139,6 +138,10 @@ function updateStatus(){
                 if(wsStatusObserver && !(JSON.stringify(prev_status)===JSON.stringify(status))){
                     wsStatusObserver.next(status);
                 }
+                if(wsTimestampObserver && ((now.valueOf()-timestamp.valueOf())>=10000)){
+                    timestamp=now;
+                    wsTimestampObserver.next(timestamp);
+                }
                 setTimeout(updateStatus, 500);
             });
     
@@ -157,6 +160,9 @@ app.ws("/ws", function(ws, req){
     }));
     subs.push(wsOrdersObservable.subscribe(s => {
         ws.send(JSON.stringify({"orders":s}));
+    }));
+    subs.push(wsTimestampObservable.subscribe(t => {
+        ws.send(JSON.stringify({"timestamp":t}));
     }));
     console.log("subscribed");
     
