@@ -68,7 +68,7 @@ export class BasicRelayComponent implements OnInit, OnDestroy {
   public whenOff(ledIndex: number) : number {
     let o = this.orders.find(o => { return o.led==ledIndex && o.command==Command.Off });
     if(o){
-      return Math.max(0, o.deadline.valueOf() - this.now.valueOf());
+      return Math.max(0, o.deadline.valueOf() + this.relayctl.getServerTimeOffset() - this.now.valueOf());
     }
     else{
       return -1;
@@ -78,7 +78,7 @@ export class BasicRelayComponent implements OnInit, OnDestroy {
   public since(ledIndex: number) : number {
     let led=this.status.leds.find(o => o.index==ledIndex);
     if(led){
-      return Math.max(0, this.now.valueOf()-led.since.valueOf());
+      return Math.max(0, this.now.valueOf()-led.since.valueOf()-this.relayctl.getServerTimeOffset());
     }
     else{
       return 0;

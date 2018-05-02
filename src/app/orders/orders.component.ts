@@ -54,7 +54,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   public timeToDeadline(d: Date){
-    return Math.max(0,Math.round(d.valueOf()-this.now.valueOf()));
+    return Math.max(0,Math.round(d.valueOf()+this.relayctl.getServerTimeOffset()-this.now.valueOf()));
   }
 
   public stringifyLedName(n : number){

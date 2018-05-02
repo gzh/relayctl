@@ -58,6 +58,7 @@ export class MetaInfo{
 export class UpdateMessage{
   status: object;
   orders: object;
+  timestamp: Date;
 }
 
 @Injectable()
@@ -71,9 +72,14 @@ export class RelayctlService {
   private metaInfoObservable: Observable<MetaInfo>;
   private metaInfo: MetaInfo;
 
+  private timeOffset: number; // correction between client and server timestamps.
+  // it's server time offset, i.e. to be added to values received from server
+  // before comparing them with client's rtc.
+
   private socket: WebSocketSubject<UpdateMessage>;
 
   constructor(private http: Http) { 
+    this.timeOffset=0;
 
     this.metaInfoObservable=this.http.get("meta").map(this.extractMetaInfo).shareReplay(1);
     this.metaInfoObservable.subscribe(x => {
@@ -100,6 +106,9 @@ export class RelayctlService {
       }
       if(message.orders){
         this.ordersObserver.next(this.extractOrdersData(message.orders));
+      }
+      if(message.timestamp){
+        this.timeOffset=Date.now().valueOf()-message.timestamp.valueOf();
       }
     });
   }
@@ -269,6 +278,9 @@ export class RelayctlService {
       return [];
     }
   }
-  
+
+  public getServerTimeOffset(){
+    return this.timeOffset;
+  }
 }
 
