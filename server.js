@@ -258,6 +258,9 @@ app.get('/status', function(req, res) {
 app.get('/orders', function(req, res) {
     res.json(orders);
 });
+app.get('/timestamp', function(req, res) {
+    res.json({timestamp: Date.now()});
+});
 // ?led=number[&timeout=number][&command=number]
 app.post('/orders', function(req, res) {
     var id=orderId++;
